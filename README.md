@@ -283,23 +283,91 @@ python cleanup_utility.py
 
 ## Requirements
 
-- Python 3.7+
-- NetworkX 3.4+
-- NumPy 1.21+
-- Matplotlib 3.5+
-- Pandas 1.3+
-- SciPy 1.7+
-- Seaborn 0.11+
-- Requests 2.25+
+This project uses Python 3.11+ with the following dependencies (specified in `requirements.txt`):
 
-## Installation
+### Core Dependencies
+- **Python 3.11+** (recommended)
+- **NetworkX 3.4.2** - Graph analysis and algorithms
+- **NumPy 2.2.6** - Numerical computations
+- **Matplotlib 3.10.3** - Plotting and visualizations
+- **Pandas 2.2.3** - Data manipulation and analysis
+- **SciPy 1.15.3** - Scientific computing
+- **Seaborn 0.13.2** - Statistical data visualization
+- **Requests 2.32.3** - HTTP library for dataset downloading
 
-All dependencies are included in the virtual environment. To set up from scratch:
+### Supporting Libraries
+- **Pillow 11.2.1** - Image processing support
+- **FontTools 4.58.0** - Font handling for plots
+- **Contourpy 1.3.2** - Contour plotting
+- **Cycler 0.12.1** - Color cycle management
+
+## Installation & Environment Setup
+
+### Option 1: Using Existing Environment (Recommended)
+
+The project comes with a pre-configured virtual environment:
 
 ```bash
+# Activate the existing environment
+source activate_env.sh
+```
+
+The `activate_env.sh` script will:
+- Activate the virtual environment
+- Display current Python path
+- List installed packages
+- Show quick start commands
+
+### Option 2: Setting Up From Scratch
+
+If you need to recreate the environment:
+
+```bash
+# Create new virtual environment
 python3 -m venv graph_theory_env
+
+# Activate it
 source graph_theory_env/bin/activate
+
+# Install all dependencies from requirements.txt
 pip install -r requirements.txt
+
+# Verify installation
+pip list --format=columns
+```
+
+### Requirements.txt Details
+
+The `requirements.txt` file contains pinned versions for reproducibility:
+
+```
+certifi==2025.4.26
+charset-normalizer==3.4.2
+contourpy==1.3.2
+cycler==0.12.1
+fonttools==4.58.0
+matplotlib==3.10.3
+networkx==3.4.2
+numpy==2.2.6
+pandas==2.2.3
+requests==2.32.3
+scipy==1.15.3
+seaborn==0.13.2
+# ... and supporting libraries
+```
+
+**Why these specific versions?**
+- Ensures compatibility across different systems
+- Prevents dependency conflicts
+- Guarantees reproducible results for academic work
+- Tested configuration for optimal performance
+
+### Verification
+
+After setup, verify everything works:
+
+```bash
+python -c "import networkx, numpy, matplotlib, pandas, scipy, seaborn; print('All dependencies loaded successfully!')"
 ```
 
 ## Algorithm Comparison Summary
