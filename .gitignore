@@ -1,0 +1,114 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environment
+graph_theory_env/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Dataset Files (raw and processed)
+*.txt.gz
+*_processed.txt
+sample_network.txt
+ca-GrQc.txt
+email-Eu-core.txt
+p2p-Gnutella04.txt
+wiki-Vote.txt
+web-NotreDame.txt
+
+# Large Generated Files
+*.dat
+*.csv
+*.tsv
+*.json
+
+# Analysis Output (keep reports but ignore large temp files)
+temp_*
+*.tmp
+*.temp
+
+# OS Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE/Editor Files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.pydevproject
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# pytest
+.pytest_cache/
+.coverage
+htmlcov/
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Logs
+*.log
+logs/
+
+# Documentation builds
+docs/_build/
+
+# Local configuration files
+.env
+.env.local
+.env.*.local
+
+# Backup files
+*.bak
+*.backup
+*~
+
+# Compressed files (except specific ones we want to keep)
+*.zip
+*.tar.gz
+*.rar
+*.7z
+
+# Keep these important files (override above patterns)
+!README.md
+!requirements.txt
+!*_analysis_report.txt
+!*_comparison.png
+!ANALYSIS_SUMMARY.txt
+!FINAL_COMPARISON_REPORT.md
