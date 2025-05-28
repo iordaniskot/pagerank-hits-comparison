@@ -1,0 +1,35 @@
+
+PAGERANK vs HITS ANALYSIS SUMMARY
+Generated: 2025-05-28 18:24:03
+Total Analysis Time: 472.96 seconds
+
+DATASETS ANALYZED:
+1. sample
+2. bio-celegans
+3. large_synthetic
+4. soc-karate
+5. bio-CE-GN
+6. ia-email-univ
+
+GENERATED FILES:
+- Analysis Reports: 6
+- Comparison Plots: 6
+- Network Data Files: 3
+
+FILES CREATED:
+- ANALYSIS_SUMMARY.txt (487B)
+- README.md (7.7KB)
+- bio-CE-GN_analysis_report.txt (1.7KB)
+- bio-CE-GN_comparison.png (1.2MB)
+- bio-celegans_analysis_report.txt (1.7KB)
+- bio-celegans_comparison.png (435.9KB)
+- ia-email-univ_analysis_report.txt (1.7KB)
+- ia-email-univ_comparison.png (783.4KB)
+- large_synthetic_analysis_report.txt (1.6KB)
+- large_synthetic_comparison.png (589.9KB)
+- readme.txt (475B)
+- requirements.txt (365B)
+- sample_analysis_comparison.png (269.8KB)
+- sample_analysis_report.txt (1.5KB)
+- soc-karate_analysis_report.txt (1.7KB)
+- soc-karate_comparison.png (357.7KB)

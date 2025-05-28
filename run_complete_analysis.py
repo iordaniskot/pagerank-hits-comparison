@@ -6,6 +6,7 @@ Runs all analyses and generates comprehensive comparison report
 
 import os
 import time
+import networkx as nx
 from graph_theory import GraphAnalyzer
 from dataset_downloader import analyze_real_dataset, get_sample_datasets
 
@@ -28,7 +29,7 @@ def run_complete_analysis():
     # Test with sample graph
     print("Creating sample graph...")
     sample_graph = analyzer.create_sample_graph()
-    analyzer.save_graph_to_file(sample_graph, "sample_network.txt")
+    analyzer.graph = sample_graph  # Set the current graph
     
     print("Running analysis on sample graph...")
     results = analyzer.compare_with_networkx()
@@ -44,9 +45,10 @@ def run_complete_analysis():
     analyzer.plot_comparison(results, "sample_analysis_comparison.png")
     print("✓ Sample graph analysis complete")
     
-    # Test with larger synthetic graph
+    # Test with larger synthetic graph using NetworkX
     print("\nCreating larger synthetic graph...")
-    large_graph = analyzer.create_large_synthetic_graph(100, 0.06)
+    import networkx as nx
+    large_graph = nx.erdos_renyi_graph(100, 0.06, directed=True)
     analyzer.graph = large_graph
     
     print("Running analysis on large synthetic graph...")

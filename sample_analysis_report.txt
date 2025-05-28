@@ -1,0 +1,55 @@
+SAMPLE GRAPH ANALYSIS REPORT
+==================================================
+================================================================================
+PAGERANK vs HITS ALGORITHM COMPARISON REPORT
+================================================================================
+
+GRAPH STATISTICS:
+  Nodes: 6
+  Edges: 12
+  Directed: True
+  Average degree: 4.00
+
+PERFORMANCE COMPARISON:
+  Custom PageRank time: 0.0015 seconds
+  NetworkX PageRank time: 0.0013 seconds
+  Custom HITS time: 0.0004 seconds
+  NetworkX HITS time: 0.0119 seconds
+
+CORRELATION ANALYSIS:
+  PageRank vs Authority: 0.8653
+  PageRank vs Hub: -0.1994
+  Authority vs Hub: -0.0650
+
+TOP 5 NODES ANALYSIS:
+  PageRank Top Nodes:
+    1. Node 3: 0.244790
+    2. Node 4: 0.213056
+    3. Node 2: 0.197695
+    4. Node 1: 0.193285
+    5. Node 5: 0.126174
+  Authority Top Nodes:
+    1. Node 1: 0.591374
+    2. Node 3: 0.591374
+    3. Node 4: 0.379706
+    4. Node 5: 0.279622
+    5. Node 2: 0.279622
+  Hub Top Nodes:
+    1. Node 5: 0.522966
+    2. Node 2: 0.429374
+    3. Node 3: 0.429374
+    4. Node 1: 0.385121
+    5. Node 6: 0.385121
+
+ALGORITHM COMPARISON SUMMARY:
+  PageRank:
+    - Measures global importance based on link structure
+    - Single score per node
+    - Good for finding authoritative pages
+    - Used by Google's original search algorithm
+
+  HITS (Authorities and Hubs):
+    - Distinguishes between authorities (good content) and hubs (good links)
+    - Two scores per node
+    - Good for topic-specific search
+    - Mutually reinforcing relationship between authorities and hubs

@@ -72,21 +72,40 @@ def extract_edges_file(zip_path: str, target_dir: str = ".") -> str:
         elif zip_path.endswith('.zip'):
             # Handle zip files
             with zipfile.ZipFile(zip_path, 'r') as zip_ref:
-                # Find the edges file (usually .edges or .txt)
-                edge_files = [f for f in zip_ref.namelist() if f.endswith(('.edges', '.txt')) and 'edge' in f.lower()]
+                # List all files in the zip
+                all_files = zip_ref.namelist()
+                print(f"Files in zip: {all_files}")
                 
-                if not edge_files:
-                    # Try any .txt file
-                    edge_files = [f for f in zip_ref.namelist() if f.endswith('.txt')]
+                # Look for edges file with various patterns
+                edge_files = []
+                
+                # Try different patterns for edge files
+                patterns = ['.edges', '.txt', '.tsv', '.csv', '.mtx']
+                for pattern in patterns:
+                    edge_files.extend([f for f in all_files if f.endswith(pattern) and not f.startswith('readme')])
+                
+                # Filter out readme files and prefer files with 'edge' in name
+                edge_files = [f for f in edge_files if not any(word in f.lower() for word in ['readme', 'license', 'citation'])]
+                
+                # If we have multiple candidates, prefer ones with edge in the name, then .mtx files
+                if len(edge_files) > 1:
+                    preferred = [f for f in edge_files if 'edge' in f.lower()]
+                    if preferred:
+                        edge_files = preferred
+                    else:
+                        # Prefer .mtx files if no edge files found
+                        mtx_files = [f for f in edge_files if f.endswith('.mtx')]
+                        if mtx_files:
+                            edge_files = mtx_files
                 
                 if edge_files:
-                    edge_file = edge_files[0]
+                    edge_file = edge_files[0]  # Take the first one
                     zip_ref.extract(edge_file, target_dir)
                     extracted_path = os.path.join(target_dir, edge_file)
                     print(f"Extracted edges file: {extracted_path}")
                     return extracted_path
                 else:
-                    print("No edges file found in the zip archive")
+                    print(f"No suitable edges file found in zip. Available files: {all_files}")
                     return None
         else:
             # File is already extracted
@@ -134,33 +153,51 @@ def process_snap_dataset(filepath: str) -> str:
 
 def get_sample_datasets():
     """
-    Dictionary of sample datasets from SNAP and other sources
+    Dictionary of sample datasets from Network Repository and other sources
     These are small to medium sized datasets suitable for testing
     """
     datasets = {
-        "ca-GrQc": {
-            "url": "https://snap.stanford.edu/data/ca-GrQc.txt.gz",
-            "description": "General Relativity collaboration network (5,242 nodes, 14,496 edges)",
+        "bio-CE-GN": {
+            "url": "https://nrvis.com/download/data/bio/bio-CE-GN.zip",
+            "description": "C. elegans gene network (2.2K nodes, 53.7K edges) - Biological Networks",
             "format": "edgelist",
-            "compressed": True
+            "compressed": True,
+            "source": "networkrepository"
         },
-        "wiki-Vote": {
-            "url": "https://snap.stanford.edu/data/wiki-Vote.txt.gz",
-            "description": "Wikipedia voting network (7,115 nodes, 103,689 edges)",
-            "format": "edgelist", 
-            "compressed": True
-        },
-        "p2p-Gnutella04": {
-            "url": "https://snap.stanford.edu/data/p2p-Gnutella04.txt.gz",
-            "description": "Gnutella peer-to-peer network (10,876 nodes, 39,994 edges)",
+        "bio-celegans": {
+            "url": "https://nrvis.com/download/data/bio/bio-celegans.zip",
+            "description": "C. elegans neural network (453 nodes, 2K edges) - Biological Networks",
             "format": "edgelist",
-            "compressed": True
+            "compressed": True,
+            "source": "networkrepository"
         },
-        "email-Eu-core": {
-            "url": "https://snap.stanford.edu/data/email-Eu-core.txt.gz",
-            "description": "Email communication network (1,005 nodes, 25,571 edges)",
+        "soc-karate": {
+            "url": "https://nrvis.com/download/data/soc/soc-karate.zip",
+            "description": "Zachary's karate club network (34 nodes, 78 edges) - Social Networks",
             "format": "edgelist",
-            "compressed": True
+            "compressed": True,
+            "source": "networkrepository"
+        },
+        "ca-netscience": {
+            "url": "https://nrvis.com/download/data/ca/ca-netscience.zip",
+            "description": "Network science collaboration network (1.6K nodes, 2.7K edges)",
+            "format": "edgelist",
+            "compressed": True,
+            "source": "networkrepository"
+        },
+        "web-polbooks": {
+            "url": "https://nrvis.com/download/data/web/web-polbooks.zip",
+            "description": "Political books network (105 nodes, 441 edges) - Web Networks",
+            "format": "edgelist",
+            "compressed": True,
+            "source": "networkrepository"
+        },
+        "ia-email-univ": {
+            "url": "https://nrvis.com/download/data/ia/ia-email-univ.zip",
+            "description": "University email network (1.1K nodes, 5.4K edges) - Interaction Networks",
+            "format": "edgelist",
+            "compressed": True,
+            "source": "networkrepository"
         }
     }
     return datasets

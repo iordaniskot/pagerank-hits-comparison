@@ -28,16 +28,59 @@ class GraphAnalyzer:
     def load_graph_from_edgelist(self, filepath: str, directed: bool = True) -> nx.Graph:
         """
         Load graph from edge list file
+        Supports both simple edge lists, weighted edge lists, and Matrix Market format
         """
         try:
-            if directed:
-                self.graph = nx.read_edgelist(filepath, create_using=nx.DiGraph(), nodetype=int)
-            else:
-                self.graph = nx.read_edgelist(filepath, create_using=nx.Graph(), nodetype=int)
-            print(f"Graph loaded: {self.graph.number_of_nodes()} nodes, {self.graph.number_of_edges()} edges")
-            return self.graph
+            # Handle Matrix Market format (.mtx files)
+            if filepath.endswith('.mtx'):
+                return self._load_from_mtx(filepath, directed)
+            
+            # First, try to load as a weighted edgelist
+            try:
+                if directed:
+                    self.graph = nx.read_edgelist(filepath, create_using=nx.DiGraph(), 
+                                                nodetype=int, data=(('weight', float),))
+                else:
+                    self.graph = nx.read_edgelist(filepath, create_using=nx.Graph(), 
+                                                nodetype=int, data=(('weight', float),))
+                print(f"Graph loaded as weighted: {self.graph.number_of_nodes()} nodes, {self.graph.number_of_edges()} edges")
+                return self.graph
+            except:
+                # If weighted loading fails, try simple edgelist
+                if directed:
+                    self.graph = nx.read_edgelist(filepath, create_using=nx.DiGraph(), nodetype=int)
+                else:
+                    self.graph = nx.read_edgelist(filepath, create_using=nx.Graph(), nodetype=int)
+                print(f"Graph loaded as simple: {self.graph.number_of_nodes()} nodes, {self.graph.number_of_edges()} edges")
+                return self.graph
         except Exception as e:
             print(f"Error loading graph: {e}")
+            return None
+    
+    def _load_from_mtx(self, filepath: str, directed: bool = True) -> nx.Graph:
+        """
+        Load graph from Matrix Market format (.mtx file)
+        """
+        try:
+            import scipy.io
+            
+            # Read the matrix market file
+            matrix = scipy.io.mmread(filepath)
+            
+            # Convert sparse matrix to NetworkX graph
+            if directed:
+                self.graph = nx.from_scipy_sparse_array(matrix, create_using=nx.DiGraph())
+            else:
+                self.graph = nx.from_scipy_sparse_array(matrix, create_using=nx.Graph())
+            
+            print(f"Graph loaded from MTX: {self.graph.number_of_nodes()} nodes, {self.graph.number_of_edges()} edges")
+            return self.graph
+            
+        except ImportError:
+            print("Error: scipy is required to load Matrix Market files")
+            return None
+        except Exception as e:
+            print(f"Error loading MTX file: {e}")
             return None
     
     def create_sample_graph(self) -> nx.DiGraph:

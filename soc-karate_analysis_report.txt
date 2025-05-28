@@ -1,0 +1,58 @@
+ANALYSIS REPORT FOR soc-karate
+==================================================
+Description: Zachary's karate club network (34 nodes, 78 edges) - Social Networks
+Source: https://nrvis.com/download/data/soc/soc-karate.zip
+
+================================================================================
+PAGERANK vs HITS ALGORITHM COMPARISON REPORT
+================================================================================
+
+GRAPH STATISTICS:
+  Nodes: 34
+  Edges: 156
+  Directed: True
+  Average degree: 9.18
+
+PERFORMANCE COMPARISON:
+  Custom PageRank time: 0.0060 seconds
+  NetworkX PageRank time: 0.0053 seconds
+  Custom HITS time: 0.0018 seconds
+  NetworkX HITS time: 0.0075 seconds
+
+CORRELATION ANALYSIS:
+  PageRank vs Authority: 0.8919
+  PageRank vs Hub: 0.8919
+  Authority vs Hub: 1.0000
+
+TOP 5 NODES ANALYSIS:
+  PageRank Top Nodes:
+    1. Node 33: 0.100919
+    2. Node 0: 0.096998
+    3. Node 32: 0.071693
+    4. Node 2: 0.057079
+    5. Node 1: 0.052877
+  Authority Top Nodes:
+    1. Node 33: 0.373364
+    2. Node 0: 0.355491
+    3. Node 2: 0.317193
+    4. Node 32: 0.308644
+    5. Node 1: 0.265960
+  Hub Top Nodes:
+    1. Node 33: 0.373363
+    2. Node 0: 0.355491
+    3. Node 2: 0.317192
+    4. Node 32: 0.308644
+    5. Node 1: 0.265960
+
+ALGORITHM COMPARISON SUMMARY:
+  PageRank:
+    - Measures global importance based on link structure
+    - Single score per node
+    - Good for finding authoritative pages
+    - Used by Google's original search algorithm
+
+  HITS (Authorities and Hubs):
+    - Distinguishes between authorities (good content) and hubs (good links)
+    - Two scores per node
+    - Good for topic-specific search
+    - Mutually reinforcing relationship between authorities and hubs
