@@ -301,6 +301,7 @@ This project uses Python 3.11+ with the following dependencies (specified in `re
 - **Contourpy 1.3.2** - Contour plotting
 - **Cycler 0.12.1** - Color cycle management
 
+```
 ## Installation & Environment Setup
 
 ### Option 1: Using Existing Environment (Recommended)
@@ -310,7 +311,6 @@ The project comes with a pre-configured virtual environment:
 ```bash
 # Activate the existing environment
 source activate_env.sh
-```
 
 The `activate_env.sh` script will:
 - Activate the virtual environment
