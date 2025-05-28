@@ -7,6 +7,8 @@ This project implements and compares the PageRank and HITS (Hyperlink-Induced To
 ```
 ├── graph_theory.py           # Main implementation and comparison
 ├── dataset_downloader.py     # Utilities for real dataset analysis  
+├── run_complete_analysis.py  # Complete analysis suite runner
+├── cleanup_utility.py        # Standalone cleanup utility
 ├── activate_env.sh          # Virtual environment activation script
 ├── requirements.txt         # Python dependencies
 ├── graph_theory_env/        # Virtual environment directory
@@ -25,11 +27,13 @@ This project implements and compares the PageRank and HITS (Hyperlink-Induced To
 - Visualization of score distributions and top nodes
 - Performance benchmarking on different graph sizes
 - Support for both synthetic and real-world datasets
+- **Automatic cleanup of temporary files** after analysis completion
 
 ### Dataset Support
 - Synthetic graph generation (Barabási-Albert model)
 - Real dataset downloading from networkrepository.com
-- Support for various graph formats (edge lists, adjacency matrices)
+- Support for various graph formats (edge lists, Matrix Market, adjacency matrices)
+- **Automatic cleanup of downloaded and extracted files**
 
 ## Quick Start
 
@@ -198,6 +202,44 @@ datasets = get_sample_datasets()
 for dataset_name in datasets.keys():
     print(f"Analyzing {dataset_name}...")
     analyze_real_dataset(dataset_name)
+```
+
+### File Cleanup
+
+The project includes automatic cleanup of temporary files created during analysis:
+
+```python
+# Manual cleanup of specific dataset files
+from dataset_downloader import cleanup_temporary_files
+cleanup_temporary_files('soc-karate')  # Clean files for specific dataset
+
+# Clean all temporary files
+cleanup_temporary_files()  # Clean all temporary files
+```
+
+**Standalone Cleanup Utility:**
+
+```bash
+# List temporary files without removing them
+python cleanup_utility.py --list
+
+# Clean all temporary files
+python cleanup_utility.py --all
+
+# Clean files for specific dataset
+python cleanup_utility.py --dataset soc-karate
+
+# Interactive mode
+python cleanup_utility.py
+```
+
+**Automatically cleaned file types:**
+- `.mtx` - Matrix Market format files
+- `.edges` - Edge list files  
+- `.zip` - Downloaded archive files
+- `*_processed.txt` - Processed SNAP dataset files
+
+**Note:** Analysis reports (`*_analysis_report.txt`) and visualizations (`*_comparison.png`) are preserved.
 ```
 
 ## Requirements

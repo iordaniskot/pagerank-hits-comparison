@@ -8,7 +8,7 @@ import os
 import time
 import networkx as nx
 from graph_theory import GraphAnalyzer
-from dataset_downloader import analyze_real_dataset, get_sample_datasets
+from dataset_downloader import analyze_real_dataset, get_sample_datasets, cleanup_temporary_files
 
 def run_complete_analysis():
     """
@@ -47,7 +47,6 @@ def run_complete_analysis():
     
     # Test with larger synthetic graph using NetworkX
     print("\nCreating larger synthetic graph...")
-    import networkx as nx
     large_graph = nx.erdos_renyi_graph(100, 0.06, directed=True)
     analyzer.graph = large_graph
     
@@ -129,17 +128,24 @@ FILES CREATED:
     with open("ANALYSIS_SUMMARY.txt", "w") as f:
         f.write(summary_content)
     
-    print(f"\n4. ANALYSIS COMPLETE!")
+    print(f"\n4. FINAL CLEANUP")
+    print("-" * 40)
+    
+    # Perform final cleanup of any remaining temporary files
+    print("Cleaning up any remaining temporary files...")
+    cleanup_temporary_files()
+    
+    print(f"\n5. ANALYSIS COMPLETE!")
     print("-" * 40)
     print(f"Total time: {time.time() - start_time:.2f} seconds")
     print(f"Files generated: {len(all_files)}")
     print(f"Reports created: {len(analysis_files)}")
     print(f"Visualizations: {len(comparison_images)}")
     print("\nKey files:")
-    print("- FINAL_COMPARISON_REPORT.md (comprehensive report)")
     print("- ANALYSIS_SUMMARY.txt (execution summary)")
     print("- *_analysis_report.txt (individual dataset reports)")
     print("- *_comparison.png (visualization plots)")
+    print("\n✓ All temporary files automatically cleaned up!")
     
     return True
 
@@ -156,7 +162,7 @@ def main():
         if success:
             print("\n🎉 Analysis suite completed successfully!")
             print("\nNext steps:")
-            print("1. Review FINAL_COMPARISON_REPORT.md for comprehensive results")
+            print("1. Review ANALYSIS_SUMMARY.txt for comprehensive results")
             print("2. Check individual dataset reports for detailed analysis")
             print("3. View comparison plots for visual insights")
         else:

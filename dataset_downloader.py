@@ -10,8 +10,72 @@ import requests
 import zipfile
 import gzip
 import os
+import glob
 import networkx as nx
 from graph_theory import GraphAnalyzer
+
+def cleanup_temporary_files(dataset_name: str = None, target_dir: str = "."):
+    """
+    Clean up temporary files created during dataset analysis
+    
+    Args:
+        dataset_name: Specific dataset name to clean up files for (optional)
+        target_dir: Directory to clean up (default: current directory)
+    """
+    temp_patterns = [
+        "*.mtx",      # Matrix Market files
+        "*.edges",    # Edge list files
+        "*.zip",      # Downloaded zip files
+        "*_processed.txt"  # Processed SNAP files
+    ]
+    
+    files_removed = []
+    
+    if dataset_name:
+        # Clean up files for specific dataset
+        for pattern in temp_patterns:
+            if pattern.startswith("*"):
+                # For general patterns, look for dataset-specific files
+                if pattern == "*.mtx":
+                    file_pattern = f"{dataset_name}.mtx"
+                elif pattern == "*.edges":
+                    file_pattern = f"{dataset_name}.edges"
+                elif pattern == "*.zip":
+                    file_pattern = f"{dataset_name}.zip"
+                elif pattern == "*_processed.txt":
+                    file_pattern = f"{dataset_name}_processed.txt"
+                
+                file_path = os.path.join(target_dir, file_pattern)
+                if os.path.exists(file_path):
+                    try:
+                        os.remove(file_path)
+                        files_removed.append(file_path)
+                        print(f"Removed temporary file: {file_path}")
+                    except Exception as e:
+                        print(f"Warning: Could not remove {file_path}: {e}")
+    else:
+        # Clean up all temporary files
+        for pattern in temp_patterns:
+            file_pattern = os.path.join(target_dir, pattern)
+            for file_path in glob.glob(file_pattern):
+                # Skip files that are clearly not temporary (e.g., analysis reports)
+                if any(keep_pattern in file_path for keep_pattern in 
+                       ['_analysis_report', '_comparison', 'ANALYSIS_SUMMARY']):
+                    continue
+                    
+                try:
+                    os.remove(file_path)
+                    files_removed.append(file_path)
+                    print(f"Removed temporary file: {file_path}")
+                except Exception as e:
+                    print(f"Warning: Could not remove {file_path}: {e}")
+    
+    if files_removed:
+        print(f"\n✓ Cleanup complete: {len(files_removed)} temporary files removed")
+    else:
+        print("\n✓ No temporary files found to clean up")
+    
+    return files_removed
 
 def download_dataset(url: str, filename: str) -> str:
     """
@@ -287,17 +351,18 @@ def analyze_real_dataset(dataset_name: str):
         print(f"- {report_filename}")
         print(f"- {plot_filename}")
         
-        # Clean up temporary files
-        if os.path.exists(downloaded_filename):
-            os.remove(downloaded_filename)
-        if edges_file != downloaded_filename and '_processed.txt' in edges_file:
-            # Keep the original extracted file but remove processed version after analysis
-            pass
+        # Clean up temporary files for this dataset
+        print(f"\nCleaning up temporary files for {dataset_name}...")
+        cleanup_temporary_files(dataset_name)
         
     except Exception as e:
         print(f"Error during analysis: {e}")
         import traceback
         traceback.print_exc()
+        
+        # Still attempt cleanup even if analysis failed
+        print(f"\nAttempting cleanup after error...")
+        cleanup_temporary_files(dataset_name)
 
 def main():
     """

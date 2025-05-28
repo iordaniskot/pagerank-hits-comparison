@@ -14,10 +14,10 @@ GRAPH STATISTICS:
   Average degree: 9.18
 
 PERFORMANCE COMPARISON:
-  Custom PageRank time: 0.0060 seconds
-  NetworkX PageRank time: 0.0053 seconds
-  Custom HITS time: 0.0018 seconds
-  NetworkX HITS time: 0.0075 seconds
+  Custom PageRank time: 0.0025 seconds
+  NetworkX PageRank time: 0.0022 seconds
+  Custom HITS time: 0.0007 seconds
+  NetworkX HITS time: 0.0172 seconds
 
 CORRELATION ANALYSIS:
   PageRank vs Authority: 0.8919
