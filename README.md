@@ -174,14 +174,6 @@ The implementation provides comprehensive performance analysis including:
 - Comparison of ranking differences
 - Visualization of score distributions
 
-## Available Datasets
-
-The project includes access to several real-world datasets from networkrepository.com:
-
-1. **ca-GrQc**: General Relativity collaboration network (5,242 nodes, 14,496 edges)
-2. **wiki-Vote**: Wikipedia voting network (7,115 nodes, 103,689 edges)
-3. **p2p-Gnutella04**: Gnutella peer-to-peer network (10,876 nodes, 39,994 edges)
-4. **web-NotreDame**: Web graph of Notre Dame university (325,729 nodes, 1,497,134 edges)
 
 ## Output Files
 
