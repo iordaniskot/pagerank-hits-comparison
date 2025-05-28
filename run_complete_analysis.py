@@ -91,42 +91,17 @@ def run_complete_analysis():
         elif file.endswith('_comparison.png'):
             comparison_images.append(file)
     
-    # Create comprehensive summary
-    summary_content = f"""
-PAGERANK vs HITS ANALYSIS SUMMARY
-Generated: {time.strftime('%Y-%m-%d %H:%M:%S')}
-Total Analysis Time: {time.time() - start_time:.2f} seconds
-
-DATASETS ANALYZED:
-"""
+   
     
     for i, file in enumerate(analysis_files, 1):
         dataset_name = file.replace('_analysis_report.txt', '')
-        summary_content += f"{i}. {dataset_name}\n"
-    
-    summary_content += f"""
-GENERATED FILES:
-- Analysis Reports: {len(analysis_files)}
-- Comparison Plots: {len(comparison_images)}
-- Network Data Files: {len([f for f in os.listdir('.') if f.endswith('.txt') and 'processed' not in f and 'report' not in f])}
 
-FILES CREATED:
-"""
+    
+   
     
     all_files = sorted([f for f in os.listdir('.') if f.endswith(('.txt', '.png', '.md')) and not f.startswith('.')])
-    for file in all_files:
-        size = os.path.getsize(file)
-        if size > 1024*1024:
-            size_str = f"{size/(1024*1024):.1f}MB"
-        elif size > 1024:
-            size_str = f"{size/1024:.1f}KB"
-        else:
-            size_str = f"{size}B"
-        summary_content += f"- {file} ({size_str})\n"
-    
-    # Save summary
-    with open("ANALYSIS_SUMMARY.txt", "w") as f:
-        f.write(summary_content)
+
+
     
     print(f"\n4. FINAL CLEANUP")
     print("-" * 40)
@@ -142,7 +117,6 @@ FILES CREATED:
     print(f"Reports created: {len(analysis_files)}")
     print(f"Visualizations: {len(comparison_images)}")
     print("\nKey files:")
-    print("- ANALYSIS_SUMMARY.txt (execution summary)")
     print("- *_analysis_report.txt (individual dataset reports)")
     print("- *_comparison.png (visualization plots)")
     print("\n✓ All temporary files automatically cleaned up!")
@@ -162,7 +136,6 @@ def main():
         if success:
             print("\n🎉 Analysis suite completed successfully!")
             print("\nNext steps:")
-            print("1. Review ANALYSIS_SUMMARY.txt for comprehensive results")
             print("2. Check individual dataset reports for detailed analysis")
             print("3. View comparison plots for visual insights")
         else:
